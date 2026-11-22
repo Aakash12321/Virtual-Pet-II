@@ -27,21 +27,22 @@ function setup() {
   feed.mousePressed(feedDog)
   addFood=createButton("Add food to storage")
   addFood.position(800,95)
-  addFood.mousePressed(addFood)
+  addFood.mousePressed(addFoods)
   foodStock=database.ref("Food");
   foodStock.on("value",readStock)
+  //listen for the last feed time once, not every frame
+  fedTime=database.ref('FeedTime');
+  fedTime.on("value",function(data)
+  {
+    lastFed=data.val();
+  });
 }
 
 
-function draw() {  
+function draw() {
   background(255,203,44)
   foodObj.display();
-  fedTime=database.ref('FeedTime'); 
-  fedTime.on("value",function(data)
-  { 
-    lastFed=data.val(); 
-  }); 
-    fill(255,255,254); 
+    fill(255,255,254);
     textSize(15); 
     if(lastFed>=12){ 
       text("Last Feed : "+ lastFed%12 + " PM", 350,30); 
