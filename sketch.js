@@ -62,8 +62,12 @@ function readStock(data){
   foodS=data.val();
   foodObj.updateFoodStock(foodS)
 }
-function feedDog(){ 
-  dog.addImage(dogImg1); 
+function feedDog(){
+  //no milk left: nothing to feed
+  if(foodObj.getFoodStock()<=0){
+    return;
+  }
+  dog.addImage(dogImg1);
   foodObj.updateFoodStock(foodObj.getFoodStock()-1); 
   database.ref('/').update({ 
     Food:foodObj.getFoodStock(), 
